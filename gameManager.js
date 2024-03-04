@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(800, 800);
   // Creating a user input
   input = new UserInput();
   // Creating a ship
@@ -25,6 +25,13 @@ function userInputUpdate() {
     ship.engine = true;
   } else {
     ship.engine = false;
+  }
+
+  if (input.down) {
+    ship.teleport();
+  } else {
+    // Once key is lifted return to can teleport
+    ship.canTeleport = true;
   }
 
   // Rotation Inputs

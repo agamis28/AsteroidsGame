@@ -12,6 +12,7 @@ class Ship {
     this.maxBullets = maxBullets;
     this.bullets = [];
     this.engine = false;
+    this.canTeleport = true;
   }
 
   display() {
@@ -56,5 +57,13 @@ class Ship {
     if (this.engine) {
       this.acceleration.add(force);
     }
+  }
+
+  teleport() {
+    if (this.canTeleport) {
+      this.velocity = createVector(0, 0);
+      this.position = createVector(random(0, width), random(0, height));
+    }
+    this.canTeleport = false;
   }
 }
