@@ -4,10 +4,10 @@ class Ship {
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
     this.rotation = 0;
-    this.rotationSpeed = 0.05;
-    this.heading = 0;
+    this.rotationSpeed = 0.1;
+    this.heading = -HALF_PI; // Start facing upwards
     this.size = size;
-    this.mass = 1;
+    this.mass = 10;
     this.currentLives = lives;
     this.maxBullets = maxBullets;
     this.bullets = [];
@@ -20,7 +20,7 @@ class Ship {
     fill("black");
     push();
     translate(this.position.x, this.position.y);
-    rotate((this.heading * PI) / 2);
+    rotate(this.heading + PI / 2);
     triangle(
       -this.size,
       this.size,
@@ -34,5 +34,27 @@ class Ship {
 
   update() {
     this.heading += this.rotation;
+
+    // Applying directional force when engine is on
+    this.applyForce();
+
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    // Friction
+    this.velocity.mult(0.99);
+    // Clearing acceleration to limit accleration
+    this.acceleration.mult(0);
+  }
+
+  // Applying directional force when engine is on
+  applyForce() {
+    // Finding the force vector from the heading angle
+    let force = p5.Vector.fromAngle(this.heading);
+    // Finding accleration a = f/m
+    force.div(this.mass);
+    // Only when the engine is on add force to acceleration
+    if (this.engine) {
+      this.acceleration.add(force);
+    }
   }
 }
