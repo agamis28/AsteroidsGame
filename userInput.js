@@ -24,16 +24,16 @@ class UserInput {
 
     // Right Inputs
     if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-      this.up = true;
+      this.right = true;
     } else {
-      this.up = false;
+      this.right = false;
     }
 
     // Left Inputs
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-      this.down = true;
+      this.left = true;
     } else {
-      this.down = false;
+      this.left = false;
     }
 
     // Space Bar
