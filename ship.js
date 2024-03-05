@@ -15,10 +15,16 @@ class Ship {
     this.canTeleport = true;
   }
 
+  // Displaying ship to screen
   display() {
+    // Setting an size offset for the tip of ship to be longer
     let sizeOffset = 5;
-    stroke("white");
-    fill("black");
+
+    // Setting colors of ship
+    stroke("#175478");
+    fill("#175478");
+
+    // Drawing ship triangle at the correct translated location
     push();
     translate(this.position.x, this.position.y);
     rotate(this.heading + PI / 2);
@@ -33,7 +39,9 @@ class Ship {
     pop();
   }
 
+  // Calling everyframe
   update() {
+    // Adding rotation to heading
     this.heading += this.rotation;
 
     // Applying directional force when engine is on
@@ -63,6 +71,8 @@ class Ship {
     if (this.canTeleport) {
       this.velocity = createVector(0, 0);
       this.position = createVector(random(0, width), random(0, height));
+      // Check collisions
+      // Die if spawned on another object
     }
     this.canTeleport = false;
   }
