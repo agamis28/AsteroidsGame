@@ -4,10 +4,10 @@ class Ship {
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
     this.rotation = 0;
-    this.rotationSpeed = 0.1;
+    this.rotationSpeed = 0.05;
     this.heading = -HALF_PI; // Start facing upwards
     this.size = size;
-    this.mass = 10;
+    this.mass = 2;
     this.currentLives = lives;
     this.maxBullets = maxBullets;
     this.bullets = [];
@@ -50,7 +50,7 @@ class Ship {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
     // Friction
-    this.velocity.mult(0.99);
+    this.velocity.mult(0.98);
     // Clearing acceleration to limit accleration
     this.acceleration.mult(0);
   }
