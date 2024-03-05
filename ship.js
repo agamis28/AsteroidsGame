@@ -76,4 +76,10 @@ class Ship {
     }
     this.canTeleport = false;
   }
+
+  changePosition(x, y) {
+    this.position.x = x;
+    this.position.y = y;
+    console.log("changing positions");
+  }
 }

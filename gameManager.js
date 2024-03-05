@@ -4,6 +4,8 @@ function setup() {
   input = new UserInput();
   // Creating a ship
   ship = new Ship(createVector(width / 2, height / 2), 15, 3, 6);
+  // Creating a collision manager
+  collisionManager = new CollisionManager();
 }
 function draw() {
   // Background
@@ -18,6 +20,10 @@ function draw() {
   // Ship
   ship.update();
   ship.display();
+
+  // Collision Manager / Wrap Edges
+  collisionManager.getPositions(ship.position, ship.size);
+  collisionManager.wrapEdges(ship);
 }
 
 function userInputUpdate() {
