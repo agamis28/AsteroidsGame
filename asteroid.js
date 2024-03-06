@@ -4,9 +4,9 @@ class Asteroid {
     this.lives = 3;
     this.speed = 1;
     this.velocity = createVector(0, 0);
-    this.size = 60;
+    this.size = 55;
     this.angleDelta = 0.5;
-    this.vertexes = random(5, 20);
+    this.vertexes = random(5, 13);
     this.change = [];
   }
 

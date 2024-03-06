@@ -1,3 +1,6 @@
+let numberOfAsteroids = 5;
+let asteroids = [];
+
 function setup() {
   createCanvas(800, 800);
   // Creating a user input
@@ -5,8 +8,12 @@ function setup() {
   // Creating a ship
   ship = new Ship(createVector(width / 2, height / 2), 15, 3, 6);
   // Creating a asteroid
-  asteroid = new Asteroid(createVector(300, 200));
-  asteroid.setup();
+  for (i = 0; i <= numberOfAsteroids; i++) {
+    asteroids[i] = new Asteroid(
+      createVector(random(0, width), random(0, height))
+    );
+    asteroids[i].setup();
+  }
   // Creating a collision manager
   collisionManager = new CollisionManager();
 }
@@ -24,9 +31,11 @@ function draw() {
   ship.update();
   ship.display();
 
-  // Asteroid
-  asteroid.update();
-  asteroid.display();
+  // Asteroids
+  for (i = 0; i <= numberOfAsteroids; i++) {
+    asteroids[i].update();
+    asteroids[i].display();
+  }
 
   // Collision Manager / Wrap Edges
   collisionManager.getPositions(ship.position, ship.size);

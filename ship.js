@@ -80,6 +80,5 @@ class Ship {
   changePosition(x, y) {
     this.position.x = x;
     this.position.y = y;
-    console.log("changing positions");
   }
 }
