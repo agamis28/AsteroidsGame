@@ -14,7 +14,7 @@ class Asteroid {
     // Check how many lives and set up correct change in asteroid size and speed
     if (this.lives == 3) {
       for (let i = 0; i <= this.vertexes; i++) {
-        this.change[i] = random(-40, 0);
+        this.change[i] = random(-30, 0);
       }
     } else if (this.lives == 2) {
       for (let i = 0; i <= this.vertexes; i++) {
@@ -36,6 +36,7 @@ class Asteroid {
   }
 
   display() {
+    push();
     stroke("white");
     fill("black");
     beginShape();
@@ -47,6 +48,7 @@ class Asteroid {
       vertex(this.position.x + x, this.position.y + y);
     }
     endShape(CLOSE);
+    pop();
   }
 
   update() {

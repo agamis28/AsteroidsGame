@@ -37,6 +37,9 @@ class Ship {
       -this.size - sizeOffset
     );
     pop();
+    fill("black");
+    stroke("black");
+    point(this.position.x, this.position.y);
   }
 
   // Calling everyframe

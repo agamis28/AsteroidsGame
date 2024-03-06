@@ -57,6 +57,9 @@ function startGameScene() {
   }
   // Creating a collision manager
   collisionManager = new CollisionManager();
+
+  // Get all objects for collision manager
+  //collisionManager.getObjects(ship, asteroids);
 }
 
 function drawGameScene() {
@@ -69,19 +72,19 @@ function drawGameScene() {
   //Calls associated bools or functions when a input is pressed
   userInputUpdate();
 
+  // Asteroids
+  for (i = 0; i <= numberOfAsteroids; i++) {
+    //asteroids[i].update();
+    asteroids[i].display();
+    collisionManager.wrapEdges(asteroids[i]);
+    console.log(collisionManager.checkCollisions(ship, asteroids[i]));
+  }
+
   // Ship
   ship.update();
   ship.display();
 
-  // Asteroids
-  for (i = 0; i <= numberOfAsteroids; i++) {
-    asteroids[i].update();
-    asteroids[i].display();
-    collisionManager.wrapEdges(asteroids[i]);
-  }
-
   // Collision Manager / Wrap Edges
-  collisionManager.getPositions(ship.position, ship.size);
   collisionManager.wrapEdges(ship);
 }
 
