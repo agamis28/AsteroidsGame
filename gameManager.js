@@ -1,8 +1,49 @@
 let numberOfAsteroids = 5;
 let asteroids = [];
+let currentScene = 0;
+// Scenes: 0 Start Screen
+// 1: Game Screen
+// 2: Gameover Screen
 
 function setup() {
   createCanvas(800, 800);
+  if (currentScene == 0) {
+    startStartMenu();
+  } else if (currentScene == 1) {
+    startGameScene();
+  }
+}
+function draw() {
+  if (currentScene == 0) {
+    drawStartMenu();
+  } else if (currentScene == 1) {
+    drawGameScene();
+  }
+}
+
+function startStartMenu() {
+  // Start Button
+  let startButton = createButton("Start Game");
+  startButton.position(width / 2 - startButton.width / 2, height / 2);
+  startButton.mousePressed(() => {
+    currentScene++;
+    startButton.remove();
+    startGameScene();
+  });
+}
+
+function drawStartMenu() {
+  // Background
+  background("black");
+
+  // Title Text
+  fill("white");
+  textFont("Helvetica");
+  textSize(50);
+  text("Asteroid's By Angel", width / 2 - 200, 80);
+}
+
+function startGameScene() {
   // Creating a user input
   input = new UserInput();
   // Creating a ship
@@ -17,7 +58,8 @@ function setup() {
   // Creating a collision manager
   collisionManager = new CollisionManager();
 }
-function draw() {
+
+function drawGameScene() {
   // Background
   background("black");
 
