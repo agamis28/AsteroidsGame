@@ -3,7 +3,7 @@ class CollisionManager {
     //Get positions of all other objects when implemented
     this.playerPosition = playerPosition;
     this.playerSize = playerSize;
-    console.log(this.playerPosition.x);
+    //console.log(this.playerPosition.x);
   }
   wrapEdges(player) {
     if (this.playerPosition.x - this.playerSize > width) {
