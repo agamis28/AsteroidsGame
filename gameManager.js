@@ -35,6 +35,7 @@ function draw() {
   for (i = 0; i <= numberOfAsteroids; i++) {
     asteroids[i].update();
     asteroids[i].display();
+    collisionManager.wrapEdges(asteroids[i]);
   }
 
   // Collision Manager / Wrap Edges
