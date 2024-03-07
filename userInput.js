@@ -4,7 +4,7 @@ class UserInput {
     this.down = false;
     this.right = false;
     this.left = false;
-    this.space = true;
+    this.space = false;
   }
 
   checkUserInput() {

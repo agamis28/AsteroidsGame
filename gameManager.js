@@ -1,6 +1,6 @@
 let numberOfAsteroids = 5;
 let asteroids = [];
-let currentScene = 0;
+let currentScene = 1;
 // Scenes: 0 Start Screen
 // 1: Game Screen
 // 2: Gameover Screen
@@ -49,7 +49,7 @@ function startGameScene() {
   // Creating a ship
   ship = new Ship(createVector(width / 2, height / 2), 15, 3, 6);
   // Creating a asteroid
-  for (i = 0; i <= numberOfAsteroids; i++) {
+  for (i = 0; i < numberOfAsteroids; i++) {
     asteroids[i] = new Asteroid(
       createVector(random(0, width), random(0, height))
     );
@@ -84,11 +84,36 @@ function drawGameScene() {
 
       // Asteroids
       // Breakup asteroids
-      console.log("lives: " + ship.currentLives);
 
-      if (asteroids[i].lives == 0) {
-        asteroids.splice(i, 1);
+      let randomOffset = random(-5, 5);
+      if (asteroids[i].lives > 0) {
+        asteroids.push(
+          new Asteroid(
+            createVector(
+              asteroids[i].position.x + randomOffset,
+              asteroids[i].position.y + randomOffset
+            )
+          )
+        );
+        randomOffset = random(-5, 5);
+        asteroids.push(
+          new Asteroid(
+            createVector(
+              asteroids[i].position.x + randomOffset,
+              asteroids[i].position.y + randomOffset
+            )
+          )
+        );
+        //asteroids.push(new Asteroid(asteroids[i].position));
+        //asteroids.push(new Asteroid(asteroids[i].position));
+        asteroids[asteroids.length - 1].lives = asteroids[i].lives - 1;
+        asteroids[asteroids.length - 2].lives = asteroids[i].lives - 1;
+        asteroids[asteroids.length - 1].setup();
+        asteroids[asteroids.length - 2].setup();
       }
+
+      asteroids.splice(i, 1);
+      //console.log("lives: " + ship.currentLives);
     }
   }
 
