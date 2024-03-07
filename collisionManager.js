@@ -1,4 +1,8 @@
 class CollisionManager {
+  constructor() {
+    this.collisionPadding = 10;
+  }
+
   wrapEdges(object) {
     // Going to right edge
     if (object - object.size > width) {
@@ -25,21 +29,8 @@ class CollisionManager {
   checkCollisions(object1, object2) {
     let distanceVec = p5.Vector.sub(object1.position, object2.position);
     let distanceMag = distanceVec.mag();
-    if (distanceMag < object1.size + object2.size) {
+    if (distanceMag < object1.size + object2.size - this.collisionPadding) {
       return true;
     }
   }
 }
-// Checking for asteroids vs ship directly
-// for (i = 0; i < this.asteroids.length; i++) {
-//   // Asteroids and Ship collison
-//   let distanceVec = p5.Vector.sub(
-//     this.ship.position,
-//     this.asteroids[i].position
-//   );
-//   let distanceMag = distanceVec.mag();
-//   if (distanceMag < this.ship.size + this.asteroids[i].size) {
-//     console.log("hit");
-//   }
-// }
-//}
