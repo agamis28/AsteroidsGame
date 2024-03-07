@@ -37,7 +37,7 @@ class Asteroid {
   display() {
     push();
     stroke("white");
-    //fill("black");
+    fill("black");
     beginShape();
     for (let i = 0; i <= this.vertexes; i++) {
       let angle = map(i, 0, this.vertexes, 0, TWO_PI);

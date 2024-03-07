@@ -77,40 +77,21 @@ function drawGameScene() {
 
     // Check collisions and if collision decrement health
     if (collisionManager.checkCollisions(ship, asteroids[i])) {
-      // Ship
+      // Ship on collisions
       ship.changePosition(width / 2, height / 2);
       ship.currentLives--;
 
-      // Asteroids
-      // Breakup asteroids
-
-      let randomOffset = random(-5, 5);
+      // Asteroids on collision
+      // Only break asteroids into two when lives aren't zero
       if (asteroids[i].lives > 0) {
-        asteroids.push(
-          new Asteroid(
-            createVector(
-              asteroids[i].position.x + randomOffset,
-              asteroids[i].position.y + randomOffset
-            )
-          )
-        );
-        randomOffset = random(-5, 5);
-        asteroids.push(
-          new Asteroid(
-            createVector(
-              asteroids[i].position.x + randomOffset,
-              asteroids[i].position.y + randomOffset
-            )
-          )
-        );
-        //asteroids.push(new Asteroid(asteroids[i].position));
-        //asteroids.push(new Asteroid(asteroids[i].position));
+        asteroids.push(new Asteroid(asteroids[i].position.copy()));
+        asteroids.push(new Asteroid(asteroids[i].position.copy()));
         asteroids[asteroids.length - 1].lives = asteroids[i].lives - 1;
         asteroids[asteroids.length - 2].lives = asteroids[i].lives - 1;
         asteroids[asteroids.length - 1].setup();
         asteroids[asteroids.length - 2].setup();
       }
-
+      // Remove current asteroid
       asteroids.splice(i, 1);
       console.log("lives: " + ship.currentLives);
     }
