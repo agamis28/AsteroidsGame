@@ -5,7 +5,7 @@ class CollisionManager {
 
   wrapEdges(object) {
     // Going to right edge
-    if (object - object.size > width) {
+    if (object.position.x - object.size > width) {
       // Change x to reset at left
       object.position = createVector(-object.size, object.position.y);
     }
