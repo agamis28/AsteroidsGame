@@ -57,9 +57,6 @@ function startGameScene() {
   }
   // Creating a collision manager
   collisionManager = new CollisionManager();
-
-  // Get all objects for collision manager
-  //collisionManager.getObjects(ship, asteroids);
 }
 
 function drawGameScene() {
@@ -119,12 +116,12 @@ function userInputUpdate() {
 
   // Rotation Inputs
   if (input.left && input.right) {
-    ship.rotation = 0;
+    ship.rotateShip(0);
   } else if (input.left) {
-    ship.rotation = -ship.rotationSpeed;
+    ship.rotateShip(-1);
   } else if (input.right) {
-    ship.rotation = ship.rotationSpeed;
+    ship.rotateShip(1);
   } else {
-    ship.rotation = 0;
+    ship.rotateShip(0);
   }
 }

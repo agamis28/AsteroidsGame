@@ -70,6 +70,10 @@ class Ship {
     }
   }
 
+  rotateShip(scalar) {
+    this.rotation = this.rotationSpeed * scalar;
+  }
+
   teleport() {
     if (this.canTeleport) {
       this.velocity = createVector(0, 0);
