@@ -17,11 +17,13 @@ class Asteroid {
         this.change[i] = random(-30, 0);
       }
     } else if (this.lives == 2) {
+      this.size = 20;
       for (let i = 0; i <= this.vertexes; i++) {
-        this.change[i] = random(-40, 0);
+        this.change[i] = random(-20, 0);
       }
       this.speed = 3;
     } else if (this.lives == 1) {
+      this.size = 5;
       for (let i = 0; i <= this.vertexes; i++) {
         this.change[i] = random(-40, 0);
       }
