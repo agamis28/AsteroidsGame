@@ -54,7 +54,6 @@ function startGameScene() {
       createVector(random(0, width), random(0, height))
     );
     asteroids[i].setup();
-    asteroids[i].randomVelocity();
   }
   // Creating a collision manager
   collisionManager = new CollisionManager();
@@ -82,14 +81,17 @@ function drawGameScene() {
     // Check collisions and if collision decrement health
     // TODO: break asteroids into two
     if (collisionManager.checkCollisions(ship, asteroids[i])) {
+      // Ship
       ship.changePosition(width / 2, height / 2);
       ship.currentLives--;
-      asteroids.push(new Asteroid(asteroids[i].position));
-      asteroids.push(new Asteroid(asteroids[i].position));
-      asteroids[asteroids.length - 1].setup();
-      asteroids[asteroids.length - 2].setup();
-      asteroids.splice(i, 1);
+
+      // Asteroids
+      // Breakup asteroids
       console.log("lives: " + ship.currentLives);
+
+      if (asteroids[i].lives == 0) {
+        asteroids.splice(i, 1);
+      }
     }
   }
 
