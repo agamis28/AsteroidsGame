@@ -1,6 +1,6 @@
 let numberOfAsteroids = 5;
 let asteroids = [];
-let currentScene = 1;
+let currentScene = 0;
 // Scenes: 0 Start Screen
 // 1: Game Screen
 // 2: Gameover Screen
