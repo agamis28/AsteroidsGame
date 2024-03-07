@@ -10,7 +10,7 @@ class Asteroid {
   }
 
   setup() {
-    console.log(this.velocity);
+    //console.log(this.velocity);
     // Check how many lives and set up correct change in asteroid size and speed
     if (this.lives == 3) {
       for (let i = 0; i <= this.vertexes; i++) {
@@ -21,19 +21,17 @@ class Asteroid {
       for (let i = 0; i <= this.vertexes; i++) {
         this.change[i] = random(-10, 0);
       }
-      this.speed = 2;
+      this.speed = 2.5;
     } else if (this.lives == 1) {
       this.size = 30;
       for (let i = 0; i <= this.vertexes; i++) {
         this.change[i] = random(-10, 0);
       }
-      this.speed = 3;
+      this.speed = 3.5;
     }
-    // Change velocity with correct speed
-    // let velocityAngle = p5.Vector.random2D();
-    // let x = this.speed * cos(velocityAngle);
-    // let y = this.speed * sin(velocityAngle);
-    // this.velocity = createVector(x, y);
+
+    // Setting correct velocity based on speed
+    this.velocity.mult(this.speed);
   }
 
   display() {
@@ -55,9 +53,5 @@ class Asteroid {
   update() {
     // Add a constant velocity to position
     this.position.add(this.velocity);
-  }
-
-  setSize(size) {
-    this.size = size;
   }
 }

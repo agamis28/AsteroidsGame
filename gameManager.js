@@ -76,7 +76,6 @@ function drawGameScene() {
     collisionManager.wrapEdges(asteroids[i]);
 
     // Check collisions and if collision decrement health
-    // TODO: break asteroids into two
     if (collisionManager.checkCollisions(ship, asteroids[i])) {
       // Ship
       ship.changePosition(width / 2, height / 2);
@@ -113,7 +112,7 @@ function drawGameScene() {
       }
 
       asteroids.splice(i, 1);
-      //console.log("lives: " + ship.currentLives);
+      console.log("lives: " + ship.currentLives);
     }
   }
 
