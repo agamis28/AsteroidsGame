@@ -7,7 +7,7 @@ class Ship {
     this.rotationSpeed = 0.05;
     this.heading = -HALF_PI; // Start facing upwards
     this.size = size;
-    this.mass = 2;
+    this.mass = 4;
     this.currentLives = lives;
     this.maxBullets = maxBullets;
     this.bullets = [];

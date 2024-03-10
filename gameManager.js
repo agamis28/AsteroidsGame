@@ -1,5 +1,6 @@
 let numberOfAsteroids = 5;
 let asteroids = [];
+let bullets = [];
 let currentScene = 0;
 // Scenes: 0 Start Screen
 // 1: Game Screen
@@ -97,6 +98,13 @@ function drawGameScene() {
     }
   }
 
+  // Bullets
+  for (i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].display();
+    console.log("updating bullet");
+  }
+
   // Ship
   ship.update();
   ship.display();
@@ -128,5 +136,11 @@ function userInputUpdate() {
     ship.rotateShip(1);
   } else {
     ship.rotateShip(0);
+  }
+}
+
+function keyPressed() {
+  if (keyCode == 32) {
+    bullets.push(new Bullet(ship.position, ship.heading));
   }
 }
