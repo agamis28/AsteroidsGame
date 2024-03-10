@@ -29,7 +29,7 @@ class CollisionManager {
   checkCollisions(object1, object2) {
     let distanceVec = p5.Vector.sub(object1.position, object2.position);
     let distanceMag = distanceVec.mag();
-    if (distanceMag < object1.size + object2.size - this.collisionPadding) {
+    if (distanceMag < object1.size + object2.size) {
       return true;
     }
   }

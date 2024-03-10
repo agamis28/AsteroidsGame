@@ -76,33 +76,28 @@ function drawGameScene() {
     asteroids[i].display();
     collisionManager.wrapEdges(asteroids[i]);
 
-    // Check collisions and if collision decrement health
+    // Check collisions with ship
     if (collisionManager.checkCollisions(ship, asteroids[i])) {
       // Ship on collisions
       ship.changePosition(width / 2, height / 2);
       ship.currentLives--;
 
-      // Asteroids on collision
-      // Only break asteroids into two when lives aren't zero
-      if (asteroids[i].lives > 0) {
-        asteroids.push(new Asteroid(asteroids[i].position.copy()));
-        asteroids.push(new Asteroid(asteroids[i].position.copy()));
-        asteroids[asteroids.length - 1].lives = asteroids[i].lives - 1;
-        asteroids[asteroids.length - 2].lives = asteroids[i].lives - 1;
-        asteroids[asteroids.length - 1].setup();
-        asteroids[asteroids.length - 2].setup();
-      }
-      // Remove current asteroid
-      asteroids.splice(i, 1);
+      breakAsteroid();
+
       console.log("lives: " + ship.currentLives);
+    }
+
+    // Bullets
+    for (j = 0; j < bullets.length; j++) {
+      if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
+        breakAsteroid();
+      }
     }
   }
 
-  // Bullets
   for (i = 0; i < bullets.length; i++) {
     bullets[i].update();
     bullets[i].display();
-    console.log("updating bullet");
   }
 
   // Ship
@@ -137,6 +132,21 @@ function userInputUpdate() {
   } else {
     ship.rotateShip(0);
   }
+}
+
+function breakAsteroid() {
+  // Asteroids on collision
+  // Only break asteroids into two when lives aren't zero
+  if (asteroids[i].lives > 0) {
+    asteroids.push(new Asteroid(asteroids[i].position.copy()));
+    asteroids.push(new Asteroid(asteroids[i].position.copy()));
+    asteroids[asteroids.length - 1].lives = asteroids[i].lives - 1;
+    asteroids[asteroids.length - 2].lives = asteroids[i].lives - 1;
+    asteroids[asteroids.length - 1].setup();
+    asteroids[asteroids.length - 2].setup();
+  }
+  // Remove current asteroid
+  asteroids.splice(i, 1);
 }
 
 function keyPressed() {
