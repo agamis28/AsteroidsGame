@@ -40,10 +40,11 @@ function drawStartMenu() {
   background("black");
 
   // Title Text
-  fill("white");
-  textFont("Helvetica");
-  textSize(50);
-  text("Asteroid's By Angel", width / 2 - 200, 80);
+  // fill("white");
+  // textFont("Helvetica");
+  // textSize(50);
+  // text("Asteroid's By Angel", width / 2 - 200, 80);
+  hud.displayStartScreen();
 }
 
 function startGameScene() {
