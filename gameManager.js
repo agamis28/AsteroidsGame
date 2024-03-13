@@ -1,6 +1,7 @@
 let numberOfAsteroids = 5;
 let asteroids = [];
 let bullets = [];
+let currentScore = 0;
 let currentScene = 0;
 // Scenes: 0 Start Screen
 // 1: Game Screen
@@ -8,6 +9,7 @@ let currentScene = 0;
 
 function setup() {
   createCanvas(800, 800);
+  hud = new HUD();
   if (currentScene == 0) {
     startStartMenu();
   } else if (currentScene == 1) {
@@ -112,7 +114,9 @@ function drawGameScene() {
 
   // Collision Manager / Wrap Edges
   collisionManager.wrapEdges(ship);
-  console.log(asteroids);
+
+  // HUD
+  hud.displayScore(currentScore);
 }
 
 function userInputUpdate() {
@@ -152,12 +156,17 @@ function breakAsteroid() {
     asteroids[asteroids.length - 1].setup();
     asteroids[asteroids.length - 2].setup();
   }
+  // Add score to currentScore
+  currentScore += asteroids[i].scoreValue;
   // Remove current asteroid
   asteroids.splice(i, 1);
 }
 
 function keyPressed() {
+  // Shooting spawning bullet
   if (keyCode == 32) {
+    if (bullets.length - 1 <= ship.maxBullets) {
+    }
     bullets.push(new Bullet(ship.position, ship.heading));
   }
 }

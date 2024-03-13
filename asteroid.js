@@ -5,6 +5,7 @@ class Asteroid {
     this.speed = 1;
     this.velocity = p5.Vector.random2D(); //createVector(0, 0);
     this.size = 55;
+    this.scoreValue = 20;
     this.vertexes = random(5, 13);
     this.change = [];
   }
@@ -18,12 +19,14 @@ class Asteroid {
       }
     } else if (this.lives == 2) {
       this.size = 40;
+      this.scoreValue = 50;
       for (let i = 0; i <= this.vertexes; i++) {
         this.change[i] = random(-10, 0);
       }
       this.speed = 2.5;
     } else if (this.lives == 1) {
       this.size = 30;
+      this.scoreValue = 100;
       for (let i = 0; i <= this.vertexes; i++) {
         this.change[i] = random(-10, 0);
       }

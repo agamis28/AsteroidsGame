@@ -67,6 +67,10 @@ class Ship {
     }
   }
 
+  knockback(){
+    
+  }
+
   rotateShip(scalar) {
     this.rotation = this.rotationSpeed * scalar;
   }
