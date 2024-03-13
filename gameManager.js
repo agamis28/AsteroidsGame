@@ -50,7 +50,7 @@ function startGameScene() {
   // Creating a user input
   input = new UserInput();
   // Creating a ship
-  ship = new Ship(createVector(width / 2, height / 2), 15, 3, 6);
+  ship = new Ship(createVector(width / 2, height / 2), 15, 5, 6);
   // Creating a asteroid
   for (i = 0; i < numberOfAsteroids; i++) {
     asteroids[i] = new Asteroid(
@@ -117,6 +117,7 @@ function drawGameScene() {
 
   // HUD
   hud.displayScore(currentScore);
+  hud.displayLives(ship.currentLives);
 }
 
 function userInputUpdate() {

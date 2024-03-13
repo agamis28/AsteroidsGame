@@ -18,7 +18,7 @@ class Ship {
   // Displaying ship to screen
   display() {
     // Setting an size offset for the tip of ship to be longer
-    let sizeOffset = 5;
+    let sizeOffset = this.size / 3;
 
     // Setting colors of ship
     stroke("#175478");
@@ -67,9 +67,7 @@ class Ship {
     }
   }
 
-  knockback(){
-    
-  }
+  knockback() {}
 
   rotateShip(scalar) {
     this.rotation = this.rotationSpeed * scalar;
