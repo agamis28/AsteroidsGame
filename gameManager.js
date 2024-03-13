@@ -77,20 +77,24 @@ function drawGameScene() {
     collisionManager.wrapEdges(asteroids[i]);
 
     // Check collisions with ship
-    if (collisionManager.checkCollisions(ship, asteroids[i])) {
-      // Ship on collisions
-      ship.changePosition(width / 2, height / 2);
-      ship.currentLives--;
+    if (asteroids[i] != undefined) {
+      if (collisionManager.checkCollisions(ship, asteroids[i])) {
+        // Ship on collisions
+        ship.changePosition(width / 2, height / 2);
+        ship.currentLives--;
 
-      breakAsteroid();
+        breakAsteroid();
 
-      console.log("lives: " + ship.currentLives);
+        console.log("lives: " + ship.currentLives);
+      }
     }
 
     // Bullets
     for (j = 0; j < bullets.length; j++) {
-      if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
-        breakAsteroid();
+      if (asteroids[i] != undefined && bullets[j] != undefined) {
+        if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
+          breakAsteroid();
+        }
       }
     }
   }
@@ -146,7 +150,12 @@ function breakAsteroid() {
     asteroids[asteroids.length - 2].setup();
   }
   // Remove current asteroid
-  asteroids.splice(i, 1);
+  for (let j = asteroids.length - 1; j >= 0; j--) {
+    if (asteroids[j] === asteroids[i]) {
+      asteroids.splice(j, 1);
+      break;
+    }
+  }
 }
 
 function keyPressed() {
