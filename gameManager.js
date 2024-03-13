@@ -72,12 +72,12 @@ function drawGameScene() {
 
   // Asteroids
   for (i = 0; i <= asteroids.length - 1; i++) {
-    asteroids[i].update();
-    asteroids[i].display();
-    collisionManager.wrapEdges(asteroids[i]);
-
-    // Check collisions with ship
     if (asteroids[i] != undefined) {
+      asteroids[i].update();
+      asteroids[i].display();
+      collisionManager.wrapEdges(asteroids[i]);
+
+      // Check collisions with ship
       if (collisionManager.checkCollisions(ship, asteroids[i])) {
         // Ship on collisions
         ship.changePosition(width / 2, height / 2);
@@ -94,6 +94,8 @@ function drawGameScene() {
       if (asteroids[i] != undefined && bullets[j] != undefined) {
         if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
           breakAsteroid();
+          bullets.splice(j, 1);
+          break;
         }
       }
     }
@@ -110,6 +112,7 @@ function drawGameScene() {
 
   // Collision Manager / Wrap Edges
   collisionManager.wrapEdges(ship);
+  console.log(asteroids);
 }
 
 function userInputUpdate() {
@@ -141,7 +144,7 @@ function userInputUpdate() {
 function breakAsteroid() {
   // Asteroids on collision
   // Only break asteroids into two when lives aren't zero
-  if (asteroids[i].lives > 0) {
+  if (asteroids[i].lives > 1) {
     asteroids.push(new Asteroid(asteroids[i].position.copy()));
     asteroids.push(new Asteroid(asteroids[i].position.copy()));
     asteroids[asteroids.length - 1].lives = asteroids[i].lives - 1;
@@ -150,12 +153,7 @@ function breakAsteroid() {
     asteroids[asteroids.length - 2].setup();
   }
   // Remove current asteroid
-  for (let j = asteroids.length - 1; j >= 0; j--) {
-    if (asteroids[j] === asteroids[i]) {
-      asteroids.splice(j, 1);
-      break;
-    }
-  }
+  asteroids.splice(i, 1);
 }
 
 function keyPressed() {
