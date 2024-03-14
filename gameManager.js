@@ -33,7 +33,6 @@ function setup() {
   crashSound = loadSound("assets/crashSound.mp3");
 
   if (currentScene == 0) {
-    startStartMenu();
   } else if (currentScene == 1) {
     startGameScene();
   } else if (currentScene == 2) {
@@ -49,21 +48,6 @@ function draw() {
   } else if (currentScene == 2) {
     drawGameOverScene();
   }
-}
-
-function startStartMenu() {
-  // Start Button
-  let startButton = createButton("Start Game");
-  startButton.position(width / 2 + startButton.width / 2, height / 2 + 200);
-  startButton.style("background-color", "black");
-  startButton.style("border", "none");
-  startButton.style("color", "white");
-  startButton.style("font-family", hud.font);
-  startButton.mousePressed(() => {
-    currentScene++;
-    startButton.remove();
-    startGameScene();
-  });
 }
 
 function drawStartMenu() {
@@ -194,7 +178,6 @@ function startGameOverScene() {
   restartButton.mousePressed(() => {
     currentScene = 0;
     restartButton.remove();
-    startStartMenu();
   });
 }
 
@@ -260,6 +243,26 @@ function keyPressed() {
     shootSound.play();
     bullets.push(new Bullet(ship.position, ship.heading));
     ship.knockback();
+  }
+}
+
+function mouseClicked() {
+  rectMode(CENTER);
+  mousePos = createVector(mouseX, mouseY - 20);
+  startButtonPos = createVector(width / 2, height / 2 + 100);
+  startButtonSizeX = 110;
+  startButtonSizeY = 40;
+  console.log(width / 2 + "height " + (height / 2 + 100));
+
+  console.log(mouseX + "Y " + mousePos.y);
+  if (
+    mouseX > startButtonPos.x - startButtonSizeX / 2 &&
+    mouseX < startButtonPos.x + startButtonSizeX / 2 &&
+    mousePos.y < startButtonPos.y + startButtonSizeY / 2 &&
+    mousePos.y > startButtonPos.y - startButtonSizeY / 2
+  ) {
+    currentScene++;
+    startGameScene();
   }
 }
 

@@ -11,6 +11,7 @@ function HUD() {
   this.livesOffset = 30;
 
   this.displayStartScreen = function () {
+    push();
     // Setting text to center
     textAlign(CENTER, CENTER);
     // Setting font
@@ -27,6 +28,17 @@ function HUD() {
     fill("white");
     text("ASTEROIDS", width / 2, height / 2 - 100);
 
+    // Start Button
+
+    // CLICK AREA
+    // fill("white");
+    // rectMode(CENTER);
+    // rect(width / 2, height / 2 + 100, 110, 40);
+
+    textSize(30);
+    fill("white");
+    text("Start Game", width / 2, height / 2 + 95);
+
     // Click to start
     // flashingColor = lerpColor(
     //   color(255, 255, 255),
@@ -37,12 +49,15 @@ function HUD() {
     // stroke(flashingColor);
     // fill(flashingColor);
     // text("Click To Start", width / 2, height / 2 + 200);
+    pop();
   };
 
   this.displayScore = function (score) {
+    push();
     textSize(40);
     textFont(this.font);
-    text("Score: " + str(score), 100, 40);
+    text("Score: " + str(score), 50, 70);
+    pop();
   };
 
   this.displayLives = function (lives) {
@@ -65,6 +80,7 @@ function HUD() {
   };
 
   this.displayGameOverScreen = function () {
+    push();
     // Setting text to center
     textAlign(CENTER, CENTER);
     // Setting font
@@ -75,5 +91,6 @@ function HUD() {
     stroke("red");
     fill("red");
     text("GAME OVER", width / 2, height / 2 - 100);
+    pop();
   };
 }
