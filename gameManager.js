@@ -23,9 +23,13 @@ let cachedLivesAdded = livesAdded;
 function setup() {
   createCanvas(1000, 800);
   hud = new HUD();
+
+  // Loading sounds
   gameMusic = createAudio("assets/arcadeMusic.mp3");
-  gameMusic.volume(0.3);
   shootSound = loadSound("assets/bulletSound.mp3");
+  engineSound = loadSound("assets/bulletSound.mp3");
+  crashSound = loadSound("assets/bulletSound.mp3");
+
   if (currentScene == 0) {
     startStartMenu();
   } else if (currentScene == 1) {

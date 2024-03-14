@@ -13,6 +13,7 @@ class Ship {
     this.bullets = [];
     this.engine = false;
     this.canTeleport = true;
+    this.teleportSound = loadSound("assets/teleportSound.mp3");
   }
 
   // Displaying ship to screen
@@ -88,8 +89,7 @@ class Ship {
     if (this.canTeleport) {
       this.velocity = createVector(0, 0);
       this.position = createVector(random(0, width), random(0, height));
-      // Check collisions
-      // Die if spawned on another object
+      this.teleportSound.play();
     }
     this.canTeleport = false;
   }
