@@ -5,7 +5,7 @@ function HUD() {
   // Lives HUD
   this.shipSize = 10;
   this.sizeOffset = this.shipSize / 3;
-  this.startPositionX = 600;
+  this.startPositionX = 800;
   this.positionY = 50;
   this.positionX = this.startPositionX;
   this.livesOffset = 30;

@@ -4,12 +4,18 @@ let bullets = [];
 let currentScene = 0;
 let currentLevel = 1;
 let currentScore = 0;
+
+// Increment Lives after point threshold
+let addLifePointThreshold = 10000;
+let livesAdded = 0;
+let cachedLivesAdded = livesAdded;
+
 // Scenes: 0 Start Screen
 // 1: Game Screen
 // 2: Gameover Screen
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(1000, 800);
   hud = new HUD();
   gameMusic = createAudio("assets/arcadeMusic.mp3");
   gameMusic.volume(0.3);
@@ -80,7 +86,6 @@ function drawGameScene() {
   userInputUpdate();
 
   // Asteroids
-  console.log(asteroids.length);
   if (asteroids.length == 0) {
     loadNewLevel();
   }
@@ -97,8 +102,6 @@ function drawGameScene() {
         ship.currentLives--;
 
         breakAsteroid();
-
-        console.log("lives: " + ship.currentLives);
       }
     }
 
@@ -122,6 +125,16 @@ function drawGameScene() {
   // Ship
   ship.update();
   ship.display();
+  livesAdded = floor(currentScore / addLifePointThreshold);
+
+  // Add life when there is a new life added
+  if (
+    livesAdded > cachedLivesAdded ||
+    (livesAdded > cachedLivesAdded && cachedLivesAdded == 0)
+  ) {
+    ship.addLife();
+    cachedLivesAdded++;
+  }
 
   // Collision Manager / Wrap Edges
   collisionManager.wrapEdges(ship);
