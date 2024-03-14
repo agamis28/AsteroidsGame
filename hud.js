@@ -28,15 +28,15 @@ function HUD() {
     text("ASTEROIDS", width / 2, height / 2 - 100);
 
     // Click to start
-    flashingColor = lerpColor(
-      color(255, 255, 255),
-      color(0, 0, 0),
-      millis() % 2
-    );
-    textSize(35);
-    stroke(flashingColor);
-    fill(flashingColor);
-    text("Click To Start", width / 2, height / 2 + 200);
+    // flashingColor = lerpColor(
+    //   color(255, 255, 255),
+    //   color(0, 0, 0),
+    //   millis() % 2
+    // );
+    // textSize(35);
+    // stroke(flashingColor);
+    // fill(flashingColor);
+    // text("Click To Start", width / 2, height / 2 + 200);
   };
 
   this.displayScore = function (score) {

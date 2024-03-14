@@ -1,8 +1,9 @@
-let numberOfAsteroids = 5;
+let numberOfAsteroids = 4;
 let asteroids = [];
 let bullets = [];
-let currentScore = 0;
 let currentScene = 0;
+let currentLevel = 1;
+let currentScore = 0;
 // Scenes: 0 Start Screen
 // 1: Game Screen
 // 2: Gameover Screen
@@ -10,6 +11,9 @@ let currentScene = 0;
 function setup() {
   createCanvas(800, 800);
   hud = new HUD();
+  gameMusic = createAudio("assets/arcadeMusic.mp3");
+  gameMusic.volume(0.3);
+  shootSound = createAudio("assets/bulletSound.mp3");
   if (currentScene == 0) {
     startStartMenu();
   } else if (currentScene == 1) {
@@ -27,7 +31,11 @@ function draw() {
 function startStartMenu() {
   // Start Button
   let startButton = createButton("Start Game");
-  startButton.position(width / 2 - startButton.width / 2, height / 2);
+  startButton.position(width / 2 - startButton.width / 2, height / 2 + 200);
+  startButton.style("background-color", "black");
+  startButton.style("border", "none");
+  startButton.style("color", "white");
+  startButton.style("font-family", hud.font);
   startButton.mousePressed(() => {
     currentScene++;
     startButton.remove();
@@ -39,11 +47,6 @@ function drawStartMenu() {
   // Background
   background("black");
 
-  // Title Text
-  // fill("white");
-  // textFont("Helvetica");
-  // textSize(50);
-  // text("Asteroid's By Angel", width / 2 - 200, 80);
   hud.displayStartScreen();
 }
 
@@ -67,6 +70,9 @@ function drawGameScene() {
   // Background
   background("black");
 
+  // Loop Music
+  gameMusic.loop();
+
   // Input
   //Sets up input key checks
   input.checkUserInput();
@@ -74,6 +80,10 @@ function drawGameScene() {
   userInputUpdate();
 
   // Asteroids
+  console.log(asteroids.length);
+  if (asteroids.length == 0) {
+    loadNewLevel();
+  }
   for (i = 0; i <= asteroids.length - 1; i++) {
     if (asteroids[i] != undefined) {
       asteroids[i].update();
@@ -169,6 +179,17 @@ function keyPressed() {
   if (keyCode == 32) {
     if (bullets.length - 1 <= ship.maxBullets) {
     }
+    shootSound.play();
     bullets.push(new Bullet(ship.position, ship.heading));
+  }
+}
+
+function loadNewLevel() {
+  numberOfAsteroids++;
+  for (i = 0; i <= numberOfAsteroids; i++) {
+    asteroids[i] = new Asteroid(
+      createVector(random(0, width), random(0, height))
+    );
+    asteroids[i].setup();
   }
 }
