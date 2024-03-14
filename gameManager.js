@@ -96,7 +96,6 @@ function drawGameScene() {
   // Check lifes and end game when lives is 0
   if (ship.currentLives <= 0) {
     // Go to game over screen
-    startGameOverScene();
     currentScene++;
     // Reset Score
     currentScore = 0;
@@ -167,20 +166,6 @@ function drawGameScene() {
   hud.displayLives(ship.currentLives);
 }
 
-function startGameOverScene() {
-  // Restart Button
-  let restartButton = createButton("Restart");
-  restartButton.position(width / 2 + restartButton.width, height / 2 + 200);
-  restartButton.style("background-color", "black");
-  restartButton.style("border", "none");
-  restartButton.style("color", "white");
-  restartButton.style("font-family", hud.font);
-  restartButton.mousePressed(() => {
-    currentScene = 0;
-    restartButton.remove();
-  });
-}
-
 function drawGameOverScene() {
   // Background
   background("black");
@@ -247,22 +232,36 @@ function keyPressed() {
 }
 
 function mouseClicked() {
-  rectMode(CENTER);
-  mousePos = createVector(mouseX, mouseY - 20);
-  startButtonPos = createVector(width / 2, height / 2 + 100);
-  startButtonSizeX = 110;
-  startButtonSizeY = 40;
-  console.log(width / 2 + "height " + (height / 2 + 100));
+  if (currentScene == 0) {
+    mousePos = createVector(mouseX, mouseY - 20);
+    startButtonPos = createVector(width / 2, height / 2 + 100);
+    startButtonSizeX = 110;
+    startButtonSizeY = 40;
 
-  console.log(mouseX + "Y " + mousePos.y);
-  if (
-    mouseX > startButtonPos.x - startButtonSizeX / 2 &&
-    mouseX < startButtonPos.x + startButtonSizeX / 2 &&
-    mousePos.y < startButtonPos.y + startButtonSizeY / 2 &&
-    mousePos.y > startButtonPos.y - startButtonSizeY / 2
-  ) {
-    currentScene++;
-    startGameScene();
+    if (
+      mouseX > startButtonPos.x - startButtonSizeX / 2 &&
+      mouseX < startButtonPos.x + startButtonSizeX / 2 &&
+      mousePos.y < startButtonPos.y + startButtonSizeY / 2 &&
+      mousePos.y > startButtonPos.y - startButtonSizeY / 2
+    ) {
+      currentScene++;
+      startGameScene();
+    }
+  }
+  if (currentScene == 2) {
+    mousePos = createVector(mouseX, mouseY - 20);
+    startButtonPos = createVector(width / 2, height / 2 + 100);
+    startButtonSizeX = 80;
+    startButtonSizeY = 40;
+
+    if (
+      mouseX > startButtonPos.x - startButtonSizeX / 2 &&
+      mouseX < startButtonPos.x + startButtonSizeX / 2 &&
+      mousePos.y < startButtonPos.y + startButtonSizeY / 2 &&
+      mousePos.y > startButtonPos.y - startButtonSizeY / 2
+    ) {
+      currentScene = 0;
+    }
   }
 }
 

@@ -91,6 +91,16 @@ function HUD() {
     stroke("red");
     fill("red");
     text("GAME OVER", width / 2, height / 2 - 100);
+
+    // CLICK AREA
+    // fill("white");
+    // rectMode(CENTER);
+    // rect(width / 2, height / 2 + 100, 80, 40);
+
+    textSize(30);
+    stroke("black");
+    fill("white");
+    text("Restart", width / 2, height / 2 + 95);
     pop();
   };
 }
