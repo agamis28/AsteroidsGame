@@ -1,9 +1,15 @@
-let numberOfAsteroids = 4;
+let startNumberOfAsteroids = 4;
+let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 let bullets = [];
 let currentScene = 0;
 let currentLevel = 1;
 let currentScore = 0;
+
+// Screen Shake
+let isScreenShake = false;
+let screenShakeDuration; // Set at screen shake start
+let screenShakeIntensity; // Set at screen shake start
 
 // Increment Lives after point threshold
 let addLifePointThreshold = 10000;
@@ -62,12 +68,16 @@ function drawStartMenu() {
 }
 
 function startGameScene() {
+  for (i = 0; i < asteroids.length; i++) {
+    asteroids.splice(i, 1);
+  }
+
   // Creating a user input
   input = new UserInput();
   // Creating a ship
   ship = new Ship(createVector(width / 2, height / 2), 15, 5, 6);
   // Creating a asteroid
-  for (i = 0; i < numberOfAsteroids; i++) {
+  for (i = 0; i < startNumberOfAsteroids; i++) {
     asteroids[i] = new Asteroid(
       createVector(random(0, width), random(0, height))
     );
@@ -90,6 +100,9 @@ function drawGameScene() {
   //Calls associated bools or functions when a input is pressed
   userInputUpdate();
 
+  // Screen Shake
+  screenShake();
+
   // Check lifes and end game when lives is 0
   if (ship.currentLives <= 0) {
     // Go to game over screen
@@ -97,6 +110,8 @@ function drawGameScene() {
     currentScene++;
     // Reset Score
     currentScore = 0;
+    // Reset number of asteroids
+    currentNumberOfAsteroids = startNumberOfAsteroids;
   }
 
   // Asteroids
@@ -116,6 +131,7 @@ function drawGameScene() {
         ship.currentLives--;
 
         breakAsteroid();
+        startScreenShake();
       }
     }
 
@@ -124,6 +140,7 @@ function drawGameScene() {
       if (asteroids[i] != undefined && bullets[j] != undefined) {
         if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
           breakAsteroid();
+          startScreenShake();
           bullets.splice(j, 1);
           break;
         }
@@ -230,12 +247,33 @@ function keyPressed() {
     }
     shootSound.play();
     bullets.push(new Bullet(ship.position, ship.heading));
+    ship.knockback();
+  }
+}
+
+function startScreenShake() {
+  isScreenShake = true;
+  screenShakeDuration = 5;
+  screenShakeIntensity = 3;
+}
+
+function screenShake() {
+  if (isScreenShake == true) {
+    if (screenShakeDuration > 0) {
+      let x = random(-screenShakeIntensity, screenShakeIntensity);
+      let y = random(-screenShakeIntensity, screenShakeIntensity);
+      translate(x, y);
+      screenShakeDuration--;
+    } else {
+      isScreenShake = false;
+    }
+    translate(0, 0);
   }
 }
 
 function loadNewLevel() {
-  numberOfAsteroids++;
-  for (i = 0; i <= numberOfAsteroids; i++) {
+  currentNumberOfAsteroids++;
+  for (i = 0; i <= currentNumberOfAsteroids; i++) {
     asteroids[i] = new Asteroid(
       createVector(random(0, width), random(0, height))
     );

@@ -67,7 +67,14 @@ class Ship {
     }
   }
 
-  knockback() {}
+  knockback() {
+    // Finding the force vector from the heading angle
+    let force = p5.Vector.fromAngle(this.heading);
+    // Finding accleration a = f/m
+    force.div(this.mass - 1);
+    // Apply an opposite acceleration as a knockback
+    this.acceleration.sub(force);
+  }
 
   rotateShip(scalar) {
     this.rotation = this.rotationSpeed * scalar;
