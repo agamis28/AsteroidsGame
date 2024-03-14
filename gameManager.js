@@ -2,7 +2,7 @@ let startNumberOfAsteroids = 4;
 let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 let bullets = [];
-let currentScene = 0;
+let currentScene = 2;
 let currentLevel = 1;
 let currentScore = 0;
 
@@ -27,7 +27,9 @@ function setup() {
   // Loading sounds
   gameMusic = createAudio("assets/arcadeMusic.mp3");
   shootSound = loadSound("assets/bulletSound.mp3");
-  engineSound = loadSound("assets/bulletSound.mp3");
+  shootSound.setVolume(0.4);
+  engineSound = loadSound("assets/engineSound.mp3");
+  engineSound.setVolume(0.3);
   crashSound = loadSound("assets/bulletSound.mp3");
 
   if (currentScene == 0) {
@@ -52,7 +54,7 @@ function draw() {
 function startStartMenu() {
   // Start Button
   let startButton = createButton("Start Game");
-  startButton.position(width / 2 - startButton.width / 2, height / 2 + 200);
+  startButton.position(width / 2 + startButton.width / 2, height / 2 + 200);
   startButton.style("background-color", "black");
   startButton.style("border", "none");
   startButton.style("color", "white");
@@ -182,7 +184,7 @@ function drawGameScene() {
 function startGameOverScene() {
   // Restart Button
   let restartButton = createButton("Restart");
-  restartButton.position(width / 2 - restartButton.width / 2, height / 2 + 200);
+  restartButton.position(width / 2 + restartButton.width, height / 2 + 200);
   restartButton.style("background-color", "black");
   restartButton.style("border", "none");
   restartButton.style("color", "white");
@@ -200,12 +202,16 @@ function drawGameOverScene() {
 
   hud.displayGameOverScreen();
 }
-
+let fade = 3;
 function userInputUpdate() {
   if (input.up) {
     ship.engine = true;
+    if (!engineSound.isPlaying()) {
+      engineSound.loop();
+    }
   } else {
     ship.engine = false;
+    engineSound.stop();
   }
 
   if (input.down) {
