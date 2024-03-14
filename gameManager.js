@@ -37,7 +37,7 @@ function setup() {
   shootSound = loadSound("assets/bulletSound.mp3");
   shootSound.setVolume(0.4);
   engineSound = loadSound("assets/engineSound.mp3");
-  engineSound.setVolume(0.3);
+  engineSound.setVolume(0.1);
   crashSound = loadSound("assets/crashSound.mp3");
 
   if (currentScene == 0) {
@@ -192,6 +192,9 @@ function drawGameOverScene() {
   // Background
   background("black");
 
+  // Stop game sounds
+  stopAllSounds();
+
   hud.displayGameOverScreen();
 }
 
@@ -313,4 +316,11 @@ function loadNewLevel() {
     );
     asteroids[i].setup();
   }
+}
+
+function stopAllSounds() {
+  gameMusic.stop();
+  shootSound.stop();
+  engineSound.stop();
+  crashSound.stop();
 }
