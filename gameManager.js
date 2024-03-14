@@ -2,7 +2,7 @@ let startNumberOfAsteroids = 4;
 let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 let bullets = [];
-let currentScene = 2;
+let currentScene = 0;
 let currentLevel = 1;
 let currentScore = 0;
 

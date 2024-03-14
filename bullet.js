@@ -14,8 +14,8 @@ class Bullet {
 
   display() {
     push();
-    stroke("red");
-    fill("red");
+    stroke("#E4BE4C");
+    fill("#E4BE4C");
     translate(this.position.x, this.position.y);
     ellipse(0, 0, this.size, this.size);
     pop();

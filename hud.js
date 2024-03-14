@@ -42,7 +42,7 @@ function HUD() {
   this.displayScore = function (score) {
     textSize(40);
     textFont(this.font);
-    text("Score: " + str(score), 75, 50);
+    text("Score: " + str(score), 100, 40);
   };
 
   this.displayLives = function (lives) {
