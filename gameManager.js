@@ -30,7 +30,7 @@ function setup() {
   shootSound.setVolume(0.4);
   engineSound = loadSound("assets/engineSound.mp3");
   engineSound.setVolume(0.3);
-  crashSound = loadSound("assets/bulletSound.mp3");
+  crashSound = loadSound("assets/crashSound.mp3");
 
   if (currentScene == 0) {
     startStartMenu();
@@ -137,6 +137,7 @@ function drawGameScene() {
         ship.currentLives--;
 
         breakAsteroid();
+        crashSound.play();
         startScreenShake();
       }
     }
@@ -146,6 +147,7 @@ function drawGameScene() {
       if (asteroids[i] != undefined && bullets[j] != undefined) {
         if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
           breakAsteroid();
+          crashSound.play();
           startScreenShake();
           bullets.splice(j, 1);
           break;
