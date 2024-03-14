@@ -1,10 +1,18 @@
-let startNumberOfAsteroids = 4;
-let currentNumberOfAsteroids = startNumberOfAsteroids;
-let asteroids = [];
-let bullets = [];
 let currentScene = 0;
 let currentLevel = 1;
 let currentScore = 0;
+
+// Ship
+let bullets = [];
+
+// Asteroids
+let startNumberOfAsteroids = 4;
+let currentNumberOfAsteroids = startNumberOfAsteroids;
+let asteroids = [];
+
+// Saucers
+let startNumberOfSaucers = 2;
+let saucers = [];
 
 // Screen Shake
 let isScreenShake = false;
@@ -73,6 +81,15 @@ function startGameScene() {
     );
     asteroids[i].setup();
   }
+
+  // Saucers
+  for (i = 0; i < startNumberOfSaucers; i++) {
+    saucers[i] = new Saucer(
+      createVector(random(0, width), random(0, height)),
+      50
+    );
+  }
+
   // Creating a collision manager
   collisionManager = new CollisionManager();
 }
@@ -149,6 +166,11 @@ function drawGameScene() {
   ship.display();
   livesAdded = floor(currentScore / addLifePointThreshold);
 
+  // Saucers
+  for (i = 0; i <= saucers.length - 1; i++) {
+    saucers[i].display();
+  }
+
   // Add life when there is a new life added
   if (
     livesAdded > cachedLivesAdded ||
@@ -172,13 +194,11 @@ function drawGameOverScene() {
 
   hud.displayGameOverScreen();
 }
-let fade = 3;
+
 function userInputUpdate() {
   if (input.up) {
     ship.engine = true;
-    if (!engineSound.isPlaying()) {
-      engineSound.loop();
-    }
+    engineSound.loop();
   } else {
     ship.engine = false;
     engineSound.stop();

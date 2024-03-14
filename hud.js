@@ -88,8 +88,8 @@ function HUD() {
 
     // Game Over
     textSize(100);
-    stroke("red");
-    fill("red");
+    stroke("#AC3535");
+    fill("#AC3535");
     text("GAME OVER", width / 2, height / 2 - 100);
 
     // CLICK AREA
