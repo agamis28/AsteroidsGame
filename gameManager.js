@@ -24,13 +24,18 @@ function setup() {
     startStartMenu();
   } else if (currentScene == 1) {
     startGameScene();
+  } else if (currentScene == 2) {
+    startGameOverScene();
   }
 }
+
 function draw() {
   if (currentScene == 0) {
     drawStartMenu();
   } else if (currentScene == 1) {
     drawGameScene();
+  } else if (currentScene == 2) {
+    drawGameOverScene();
   }
 }
 
@@ -84,6 +89,15 @@ function drawGameScene() {
   input.checkUserInput();
   //Calls associated bools or functions when a input is pressed
   userInputUpdate();
+
+  // Check lifes and end game when lives is 0
+  if (ship.currentLives <= 0) {
+    // Go to game over screen
+    startGameOverScene();
+    currentScene++;
+    // Reset Score
+    currentScore = 0;
+  }
 
   // Asteroids
   if (asteroids.length == 0) {
@@ -142,6 +156,28 @@ function drawGameScene() {
   // HUD
   hud.displayScore(currentScore);
   hud.displayLives(ship.currentLives);
+}
+
+function startGameOverScene() {
+  // Restart Button
+  let restartButton = createButton("Restart");
+  restartButton.position(width / 2 - restartButton.width / 2, height / 2 + 200);
+  restartButton.style("background-color", "black");
+  restartButton.style("border", "none");
+  restartButton.style("color", "white");
+  restartButton.style("font-family", hud.font);
+  restartButton.mousePressed(() => {
+    currentScene = 0;
+    restartButton.remove();
+    startStartMenu();
+  });
+}
+
+function drawGameOverScene() {
+  // Background
+  background("black");
+
+  hud.displayGameOverScreen();
 }
 
 function userInputUpdate() {

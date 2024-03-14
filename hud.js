@@ -63,4 +63,17 @@ function HUD() {
     }
     this.positionX = this.startPositionX;
   };
+
+  this.displayGameOverScreen = function () {
+    // Setting text to center
+    textAlign(CENTER, CENTER);
+    // Setting font
+    textFont(this.font);
+
+    // Game Over
+    textSize(100);
+    stroke("red");
+    fill("red");
+    text("GAME OVER", width / 2, height / 2 - 100);
+  };
 }
