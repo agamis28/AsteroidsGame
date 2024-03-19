@@ -8,10 +8,10 @@ class Asteroid {
     this.scoreValue = 20;
     this.vertexes = random(5, 13);
     this.change = [];
+    this.setup(); // Setting up asteroid by size on creation
   }
 
   setup() {
-    //console.log(this.velocity);
     // Check how many lives and set up correct change in asteroid size and speed
     if (this.lives == 3) {
       for (let i = 0; i <= this.vertexes; i++) {

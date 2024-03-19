@@ -79,7 +79,6 @@ function startGameScene() {
     asteroids[i] = new Asteroid(
       createVector(random(0, width), random(0, height))
     );
-    asteroids[i].setup();
   }
 
   // Saucers
@@ -314,7 +313,6 @@ function loadNewLevel() {
     asteroids[i] = new Asteroid(
       createVector(random(0, width), random(0, height))
     );
-    asteroids[i].setup();
   }
 }
 
