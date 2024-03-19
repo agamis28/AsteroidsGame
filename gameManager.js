@@ -11,7 +11,7 @@ let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 
 // Saucers
-let startNumberOfSaucers = 2;
+let startNumberOfSaucers = 1;
 let saucers = [];
 
 // Screen Shake
@@ -83,10 +83,22 @@ function startGameScene() {
 
   // Saucers
   for (i = 0; i < startNumberOfSaucers; i++) {
-    saucers[i] = new Saucer(
-      createVector(random(0, width), random(0, height)),
-      50
-    );
+    let saucerIsLarge = random() < 0.7; // 70% chance of being true
+    let saucerIsGoingLeft = random() < 0.5; // 50% chance of being true
+
+    if (saucerIsGoingLeft) {
+      saucers[i] = new Saucer(
+        createVector(width, random(0, height)),
+        saucerIsLarge,
+        saucerIsGoingLeft
+      );
+    } else {
+      saucers[i] = new Saucer(
+        createVector(0, random(0, height)),
+        saucerIsLarge,
+        saucerIsGoingLeft
+      );
+    }
   }
 
   // Creating a collision manager
@@ -168,6 +180,8 @@ function drawGameScene() {
   // Saucers
   for (i = 0; i <= saucers.length - 1; i++) {
     saucers[i].display();
+    saucers[i].update();
+    collisionManager.wrapEdges(saucers[i]);
   }
 
   // Add life when there is a new life added
