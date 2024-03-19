@@ -84,20 +84,22 @@ function startGameScene() {
 
   // Saucers
   for (i = 0; i < startNumberOfSaucers; i++) {
-    let saucerIsLarge = random() < 0.7; // 70% chance of being true
+    let saucerIsLarge = random() == 1; // 70% chance of being true
     let saucerIsGoingLeft = random() < 0.5; // 50% chance of being true
 
     if (saucerIsGoingLeft) {
       saucers[i] = new Saucer(
         createVector(width, random(0, height)),
         saucerIsLarge,
-        saucerIsGoingLeft
+        saucerIsGoingLeft,
+        currentScore
       );
     } else {
       saucers[i] = new Saucer(
         createVector(0, random(0, height)),
         saucerIsLarge,
-        saucerIsGoingLeft
+        saucerIsGoingLeft,
+        currentScore
       );
     }
   }
@@ -122,6 +124,9 @@ function drawGameScene() {
   // Screen Shake
   screenShake();
 
+  // Updating current number of asteroids
+  currentNumberOfAsteroids = asteroids.length;
+
   // Check lifes and end game when lives is 0
   if (ship.currentLives <= 0) {
     // Go to game over screen
@@ -133,7 +138,7 @@ function drawGameScene() {
   }
 
   // Asteroids
-  if (asteroids.length == 0) {
+  if (asteroids.length == 0 && startNumberOfAsteroids != 0) {
     loadNewLevel();
   }
   for (i = 0; i <= asteroids.length - 1; i++) {
@@ -177,7 +182,7 @@ function drawGameScene() {
   for (i = 0; i <= saucers.length - 1; i++) {
     saucers[i].getPlayer(ship);
     saucers[i].display();
-    saucers[i].update();
+    //saucers[i].update();
     collisionManager.wrapEdges(saucers[i]);
 
     console.log(saucers[i].bullets.length);

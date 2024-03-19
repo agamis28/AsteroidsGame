@@ -1,5 +1,5 @@
 class Saucer {
-  constructor(position, large, left) {
+  constructor(position, large, left, currentScore) {
     this.position = position;
     this.large = large;
     this.left = left;
@@ -8,9 +8,11 @@ class Saucer {
     this.speed = 2;
     this.size;
     this.player;
-    this.accuracy;
+    this.accuracyOffset = HALF_PI + QUARTER_PI;
     this.bulletAngle;
     this.bullets = [];
+    this.accuracyPointIncrement = 200;
+    this.score = currentScore;
     this.setup();
     this.pickRandomMoveDirection();
   }
@@ -18,10 +20,19 @@ class Saucer {
   setup() {
     if (this.large) {
       this.size = 55;
-      // bad accuracy
+      // Bad Accuracy, Larger Offset (Set in Constructor)
     } else {
+      // Good accuracy based on score
+      let scoreIncrementAmount = floor(
+        this.score / this.accuracyPointIncrement
+      );
       this.size = 30;
-      // accuracy is good and will tale players current velocity into account
+      this.accuracyOffset -= scoreIncrementAmount * (QUARTER_PI / 20);
+      this.accuracyOffset = constrain(
+        this.accuracyOffset,
+        0,
+        HALF_PI + QUARTER_PI
+      );
     }
 
     // Binding con
@@ -82,7 +93,16 @@ class Saucer {
   shoot() {
     let directionOfPlayer = p5.Vector.sub(this.player.position, this.position);
 
-    this.bulletAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
+    let playerAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
+
+    constrain(this.accuracyOffset, 0, TWO_PI);
+
+    this.bulletAngle = random(
+      playerAngle - this.accuracyOffset,
+      playerAngle + this.accuracyOffset
+    );
+
+    console.log(this.bulletAngle);
 
     this.bullets.push(new Bullet(this.position, this.bulletAngle, "#FE1517"));
     console.log("saucer shoot");
