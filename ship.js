@@ -51,7 +51,7 @@ class Ship {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
     // Friction
-    this.velocity.mult(0.98);
+    this.velocity.mult(0.99);
     // Clearing acceleration to limit accleration
     this.acceleration.mult(0);
   }
