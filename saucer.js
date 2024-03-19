@@ -7,9 +7,12 @@ class Saucer {
     this.velocity = createVector(0, 0);
     this.speed = 2;
     this.size;
+    this.player;
     this.accuracy;
+    this.bulletAngle;
+    this.bullets = [];
     this.setup();
-    this.pickRandomDirection();
+    this.pickRandomMoveDirection();
   }
 
   setup() {
@@ -23,10 +26,10 @@ class Saucer {
 
     // Binding con
     this.shoot = this.shoot.bind(this);
-    this.pickRandomDirection = this.pickRandomDirection.bind(this);
+    this.pickRandomDirection = this.pickRandomMoveDirection.bind(this);
 
     this.shooting = setInterval(this.shoot, 2000);
-    this.changingDirection = setInterval(this.pickRandomDirection, 2000);
+    this.changingDirection = setInterval(this.pickRandomMoveDirection, 2000);
   }
 
   display() {
@@ -68,11 +71,20 @@ class Saucer {
     this.position.add(this.velocity);
   }
 
-  pickRandomDirection() {
+  pickRandomMoveDirection() {
     this.direction = floor(random() * 3);
   }
 
+  getPlayer(player) {
+    this.player = player;
+  }
+
   shoot() {
+    let directionOfPlayer = p5.Vector.sub(this.player.position, this.position);
+
+    this.bulletAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
+
+    this.bullets.push(new Bullet(this.position, this.bulletAngle, "#FE1517"));
     console.log("saucer shoot");
   }
 }

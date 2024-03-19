@@ -13,6 +13,7 @@ let asteroids = [];
 // Saucers
 let startNumberOfSaucers = 1;
 let saucers = [];
+let saucerBullets = [];
 
 // Screen Shake
 let isScreenShake = false;
@@ -172,17 +173,24 @@ function drawGameScene() {
     bullets[i].display();
   }
 
+  // Saucers
+  for (i = 0; i <= saucers.length - 1; i++) {
+    saucers[i].getPlayer(ship);
+    saucers[i].display();
+    saucers[i].update();
+    collisionManager.wrapEdges(saucers[i]);
+
+    console.log(saucers[i].bullets.length);
+    for (j = 0; j < saucers[i].bullets.length; j++) {
+      saucers[i].bullets[j].update();
+      saucers[i].bullets[j].display();
+    }
+  }
+
   // Ship
   ship.update();
   ship.display();
   livesAdded = floor(currentScore / addLifePointThreshold);
-
-  // Saucers
-  for (i = 0; i <= saucers.length - 1; i++) {
-    saucers[i].display();
-    saucers[i].update();
-    collisionManager.wrapEdges(saucers[i]);
-  }
 
   // Add life when there is a new life added
   if (
@@ -267,7 +275,7 @@ function shoot() {
   if (bullets.length - 1 <= ship.maxBullets) {
   }
   shootSound.play();
-  bullets.push(new Bullet(ship.position, ship.heading));
+  bullets.push(new Bullet(ship.position, ship.heading, "#E4BE4C"));
   ship.knockback();
 }
 
