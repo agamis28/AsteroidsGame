@@ -259,12 +259,16 @@ function breakAsteroid() {
 function keyPressed() {
   // Shooting spawning bullet
   if (keyCode == 32) {
-    if (bullets.length - 1 <= ship.maxBullets) {
-    }
-    shootSound.play();
-    bullets.push(new Bullet(ship.position, ship.heading));
-    ship.knockback();
+    shoot();
   }
+}
+
+function shoot() {
+  if (bullets.length - 1 <= ship.maxBullets) {
+  }
+  shootSound.play();
+  bullets.push(new Bullet(ship.position, ship.heading));
+  ship.knockback();
 }
 
 function mouseClicked() {
