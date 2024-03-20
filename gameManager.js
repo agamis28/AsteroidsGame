@@ -11,9 +11,13 @@ let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 
 // Saucers
-let startNumberOfSaucers = 1;
+let startNumberOfSaucers = 0;
 let saucers = [];
 let saucerBullets = [];
+// Add saucer after point threshold
+let spawnSaucerThreshold = 1500;
+let saucersSpawned = 0;
+let cachedSaucersSpawned = saucersSpawned;
 
 // Screen Shake
 let isScreenShake = false;
@@ -84,24 +88,7 @@ function startGameScene() {
 
   // Saucers
   for (i = 0; i < startNumberOfSaucers; i++) {
-    let saucerIsLarge = random() == 1; // 70% chance of being true
-    let saucerIsGoingLeft = random() < 0.5; // 50% chance of being true
-
-    if (saucerIsGoingLeft) {
-      saucers[i] = new Saucer(
-        createVector(width, random(0, height)),
-        saucerIsLarge,
-        saucerIsGoingLeft,
-        currentScore
-      );
-    } else {
-      saucers[i] = new Saucer(
-        createVector(0, random(0, height)),
-        saucerIsLarge,
-        saucerIsGoingLeft,
-        currentScore
-      );
-    }
+    // For testing spawn in start number of saucers
   }
 
   // Creating a collision manager
@@ -179,14 +166,23 @@ function drawGameScene() {
   for (i = 0; i <= saucers.length - 1; i++) {
     saucers[i].getPlayer(ship);
     saucers[i].display();
-    //saucers[i].update();
+    saucers[i].update();
     collisionManager.wrapEdges(saucers[i]);
 
-    console.log(saucers[i].bullets.length);
     for (j = 0; j < saucers[i].bullets.length; j++) {
       saucers[i].bullets[j].update();
       saucers[i].bullets[j].display();
     }
+  }
+
+  // Spawn saucer when hitting a threshold
+  saucersSpawned = floor(currentScore / spawnSaucerThreshold);
+  if (
+    saucersSpawned > cachedSaucersSpawned ||
+    (saucersSpawned > cachedSaucersSpawned && cachedSaucersSpawned == 0)
+  ) {
+    spawnSaucer();
+    cachedSaucersSpawned++;
   }
 
   // Ship
@@ -332,6 +328,27 @@ function screenShake() {
       isScreenShake = false;
     }
     translate(0, 0);
+  }
+}
+
+function spawnSaucer() {
+  let saucerIsLarge = random() < 0.7; // 70% chance of being true
+  let saucerIsGoingLeft = random() < 0.5; // 50% chance of being true
+
+  if (saucerIsGoingLeft) {
+    saucers[i] = new Saucer(
+      createVector(width, random(0, height)),
+      saucerIsLarge,
+      saucerIsGoingLeft,
+      currentScore
+    );
+  } else {
+    saucers[i] = new Saucer(
+      createVector(0, random(0, height)),
+      saucerIsLarge,
+      saucerIsGoingLeft,
+      currentScore
+    );
   }
 }
 

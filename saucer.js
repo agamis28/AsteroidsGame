@@ -91,6 +91,8 @@ class Saucer {
   }
 
   shoot() {
+    console.log("accuracy : " + this.accuracyOffset);
+
     let directionOfPlayer = p5.Vector.sub(this.player.position, this.position);
 
     let playerAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
@@ -102,9 +104,6 @@ class Saucer {
       playerAngle + this.accuracyOffset
     );
 
-    console.log(this.bulletAngle);
-
     this.bullets.push(new Bullet(this.position, this.bulletAngle, "#FE1517"));
-    console.log("saucer shoot");
   }
 }
