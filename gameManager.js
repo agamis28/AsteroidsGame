@@ -124,9 +124,6 @@ function drawGameScene() {
   // Screen Shake
   screenShake();
 
-  // Updating current number of asteroids
-  currentNumberOfAsteroids = asteroids.length;
-
   // Check lifes and end game when lives is 0
   if (ship.currentLives <= 0) {
     // Go to game over screen
