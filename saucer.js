@@ -19,14 +19,14 @@ class Saucer {
 
   setup() {
     if (this.large) {
-      this.size = 55;
+      this.size = 30;
       // Bad Accuracy, Larger Offset (Set in Constructor)
     } else {
       // Good accuracy based on score
       let scoreIncrementAmount = floor(
         this.score / this.accuracyPointIncrement
       );
-      this.size = 30;
+      this.size = 15;
       this.accuracyOffset -= scoreIncrementAmount * (QUARTER_PI / 20);
       this.accuracyOffset = constrain(
         this.accuracyOffset,
@@ -45,6 +45,7 @@ class Saucer {
 
   display() {
     push();
+    ellipseMode(RADIUS);
     translate(this.position.x, this.position.y);
     fill("#AC3535");
     stroke("#AC3535");
