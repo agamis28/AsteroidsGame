@@ -13,7 +13,6 @@ let asteroids = [];
 // Saucers
 let startNumberOfSaucers = 0;
 let saucers = [];
-let saucerBullets = [];
 // Add saucer after point threshold
 let spawnSaucerThreshold = 1500;
 let saucersSpawned = 0;
@@ -119,6 +118,13 @@ function drawGameScene() {
     currentScore = 0;
     // Reset number of asteroids
     currentNumberOfAsteroids = startNumberOfAsteroids;
+    // Reset saucers and saucer bullets
+    for (i = 0; i <= saucers.length - 1; i++) {
+      saucers[i].bullets = [];
+    }
+    saucers = [];
+    // Reset bullets
+    bullets = [];
   }
 
   // Asteroids
@@ -218,30 +224,32 @@ function drawGameOverScene() {
 }
 
 function userInputUpdate() {
-  if (input.up) {
-    ship.engine = true;
-    engineSound.loop();
-  } else {
-    ship.engine = false;
-    engineSound.stop();
-  }
+  if (currentScene == 1) {
+    if (input.up) {
+      ship.engine = true;
+      engineSound.loop();
+    } else {
+      ship.engine = false;
+      engineSound.stop();
+    }
 
-  if (input.down) {
-    ship.teleport();
-  } else {
-    // Once key is lifted return to can teleport
-    ship.canTeleport = true;
-  }
+    if (input.down) {
+      ship.teleport();
+    } else {
+      // Once key is lifted return to can teleport
+      ship.canTeleport = true;
+    }
 
-  // Rotation Inputs
-  if (input.left && input.right) {
-    ship.rotateShip(0);
-  } else if (input.left) {
-    ship.rotateShip(-1);
-  } else if (input.right) {
-    ship.rotateShip(1);
-  } else {
-    ship.rotateShip(0);
+    // Rotation Inputs
+    if (input.left && input.right) {
+      ship.rotateShip(0);
+    } else if (input.left) {
+      ship.rotateShip(-1);
+    } else if (input.right) {
+      ship.rotateShip(1);
+    } else {
+      ship.rotateShip(0);
+    }
   }
 }
 
@@ -263,9 +271,11 @@ function breakAsteroid() {
 }
 
 function keyPressed() {
-  // Shooting spawning bullet
-  if (keyCode == 32) {
-    shoot();
+  if (currentScene == 1) {
+    // Shooting spawning bullet
+    if (keyCode == 32) {
+      shoot();
+    }
   }
 }
 
