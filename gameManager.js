@@ -14,7 +14,7 @@ let asteroids = [];
 let startNumberOfSaucers = 0;
 let saucers = [];
 // Add saucer after point threshold
-let spawnSaucerThreshold = 1500;
+let spawnSaucerThreshold = 200; // 1500 playtest: 200
 let saucersSpawned = 0;
 let cachedSaucersSpawned = saucersSpawned;
 
@@ -88,6 +88,7 @@ function startGameScene() {
   // Saucers
   for (i = 0; i < startNumberOfSaucers; i++) {
     // For testing spawn in start number of saucers
+    spawnSaucer();
   }
 
   // Creating a collision manager
@@ -149,11 +150,24 @@ function drawGameScene() {
       }
     }
 
-    // Bullets
+    // Check collisions with saucers
+    for (j = 0; j < saucers.length; j++) {
+      if (asteroids[i] != undefined && saucers[j] != undefined) {
+        if (collisionManager.checkCollisions(asteroids[i], saucers[j])) {
+          breakAsteroid();
+          crashSound.play();
+          startScreenShake();
+          saucers.splice(j, 1);
+          break;
+        }
+      }
+    }
+
+    // Check collisions with Bullets
     for (j = 0; j < bullets.length; j++) {
       if (asteroids[i] != undefined && bullets[j] != undefined) {
         if (collisionManager.checkCollisions(asteroids[i], bullets[j])) {
-          breakAsteroid();
+          breakAsteroid("ship bullet");
           crashSound.play();
           startScreenShake();
           bullets.splice(j, 1);
@@ -253,7 +267,7 @@ function userInputUpdate() {
   }
 }
 
-function breakAsteroid() {
+function breakAsteroid(object) {
   // Asteroids on collision
   // Only break asteroids into two when lives aren't zero
   if (asteroids[i].lives > 1) {
@@ -264,8 +278,13 @@ function breakAsteroid() {
     asteroids[asteroids.length - 1].setup();
     asteroids[asteroids.length - 2].setup();
   }
-  // Add score to currentScore
-  currentScore += asteroids[i].scoreValue;
+
+  // Only add to score when the ships bullet breaks asteroid
+  if (object === "ship bullet") {
+    // Add score to currentScore
+    currentScore += asteroids[i].scoreValue;
+  }
+
   // Remove current asteroid
   asteroids.splice(i, 1);
 }
@@ -346,18 +365,22 @@ function spawnSaucer() {
   let saucerIsGoingLeft = random() < 0.5; // 50% chance of being true
 
   if (saucerIsGoingLeft) {
-    saucers[i] = new Saucer(
-      createVector(width, random(0, height)),
-      saucerIsLarge,
-      saucerIsGoingLeft,
-      currentScore
+    saucers.push(
+      new Saucer(
+        createVector(width, random(0, height)),
+        saucerIsLarge,
+        saucerIsGoingLeft,
+        currentScore
+      )
     );
   } else {
-    saucers[i] = new Saucer(
-      createVector(0, random(0, height)),
-      saucerIsLarge,
-      saucerIsGoingLeft,
-      currentScore
+    saucers.push(
+      new Saucer(
+        createVector(0, random(0, height)),
+        saucerIsLarge,
+        saucerIsGoingLeft,
+        currentScore
+      )
     );
   }
 }
