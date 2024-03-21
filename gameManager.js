@@ -471,6 +471,22 @@ function mouseClicked() {
       currentScene = 3;
     }
   }
+
+  if (currentScene == 3) {
+    // Main Menu Button
+    mainMenuButtonPos = createVector(width / 2, height / 2 + 250);
+    mainMenuButtonSizeX = 100;
+    mainMenuButtonSizeY = 40;
+
+    if (
+      mouseX > mainMenuButtonPos.x - mainMenuButtonSizeX / 2 &&
+      mouseX < mainMenuButtonPos.x + mainMenuButtonSizeX / 2 &&
+      mousePos.y < mainMenuButtonPos.y + mainMenuButtonSizeY / 2 &&
+      mousePos.y > mainMenuButtonPos.y - mainMenuButtonSizeY / 2
+    ) {
+      currentScene = 0;
+    }
+  }
 }
 
 function startScreenShake() {
