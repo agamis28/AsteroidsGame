@@ -418,8 +418,9 @@ function shoot() {
 }
 
 function mouseClicked() {
+  mousePos = createVector(mouseX, mouseY - 20);
+
   if (currentScene == 0) {
-    mousePos = createVector(mouseX, mouseY - 20);
     startButtonPos = createVector(width / 2, height / 2 + 100);
     startButtonSizeX = 110;
     startButtonSizeY = 40;
@@ -435,18 +436,32 @@ function mouseClicked() {
     }
   }
   if (currentScene == 2) {
-    mousePos = createVector(mouseX, mouseY - 20);
-    startButtonPos = createVector(width / 2, height / 2 + 100);
-    startButtonSizeX = 80;
-    startButtonSizeY = 40;
+    // Restart Button
+    restartButtonPos = createVector(width / 2, height / 2 + 150);
+    restartButtonSizeX = 80;
+    restartButtonSizeY = 40;
 
     if (
-      mouseX > startButtonPos.x - startButtonSizeX / 2 &&
-      mouseX < startButtonPos.x + startButtonSizeX / 2 &&
-      mousePos.y < startButtonPos.y + startButtonSizeY / 2 &&
-      mousePos.y > startButtonPos.y - startButtonSizeY / 2
+      mouseX > restartButtonPos.x - restartButtonSizeX / 2 &&
+      mouseX < restartButtonPos.x + restartButtonSizeX / 2 &&
+      mousePos.y < restartButtonPos.y + restartButtonSizeY / 2 &&
+      mousePos.y > restartButtonPos.y - restartButtonSizeY / 2
     ) {
       currentScene = 0;
+    }
+
+    // Highscores Button
+    highscoresButtonPos = createVector(width / 2, height / 2 + 230);
+    highscoresButtonSizeX = 115;
+    highscoresButtonSizeY = 40;
+
+    if (
+      mouseX > highscoresButtonPos.x - highscoresButtonSizeX / 2 &&
+      mouseX < highscoresButtonPos.x + highscoresButtonSizeX / 2 &&
+      mousePos.y < highscoresButtonPos.y + highscoresButtonSizeY / 2 &&
+      mousePos.y > highscoresButtonPos.y - highscoresButtonSizeY / 2
+    ) {
+      currentScene = 3;
     }
   }
 }
