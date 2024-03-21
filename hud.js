@@ -79,7 +79,7 @@ function HUD() {
     this.positionX = this.startPositionX;
   };
 
-  this.displayGameOverScreen = function () {
+  this.displayGameOverScreen = function (score) {
     push();
     // Setting text to center
     textAlign(CENTER, CENTER);
@@ -90,17 +90,96 @@ function HUD() {
     textSize(100);
     stroke("#AC3535");
     fill("#AC3535");
-    text("GAME OVER", width / 2, height / 2 - 100);
+    text("GAME OVER", width / 2, height / 2 - 200);
+
+    // Score:
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("Score:", width / 2, height / 2 - 75);
+
+    // Score Number
+    textSize(50);
+    stroke("white");
+    fill("white");
+    text(str(score), width / 2, height / 2);
 
     // CLICK AREA
     // fill("white");
     // rectMode(CENTER);
-    // rect(width / 2, height / 2 + 100, 80, 40);
+    // rect(width / 2, height / 2 + 150, 80, 40);
+
+    // Restart Button
+    textSize(30);
+    stroke("black");
+    fill("white");
+    text("Restart", width / 2, height / 2 + 145);
+
+    // CLICK AREA
+    // fill("white");
+    // rectMode(CENTER);
+    // rect(width / 2, height / 2 + 230, 115, 40);
+
+    // Highscores Button
+    textSize(30);
+    stroke("black");
+    fill("white");
+    text("Highscores", width / 2, height / 2 + 225);
+    pop();
+  };
+
+  this.displayHighscoreScene = function () {
+    push();
+    // Setting text to center
+    textAlign(CENTER, CENTER);
+    // Setting font
+    textFont(this.font);
+
+    // Highscores
+    textSize(100);
+    stroke("white");
+    fill("white");
+    text("Highscores", width / 2, height / 2 - 300);
+
+    // Number 1
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("1. Name: 2902974", width / 2, height / 2 - 140);
+
+    // Number 2
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("2. JAHAH: 249298", width / 2, height / 2 - 70);
+
+    // Number 3
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("3. dsdsa: 10274", width / 2, height / 2 - 0);
+
+    // Number 4
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("4. Kdsde: 8524", width / 2, height / 2 + 70);
+
+    // Number 5
+    textSize(60);
+    stroke("#175478");
+    fill("#175478");
+    text("5. Angel: 1222", width / 2, height / 2 + 140);
+
+    // CLICK AREA
+    // fill("white");
+    // rectMode(CENTER);
+    // rect(width / 2, height / 2 + 250, 100, 40);
 
     textSize(30);
     stroke("black");
     fill("white");
-    text("Restart", width / 2, height / 2 + 95);
+    text("Main Menu", width / 2, height / 2 + 245);
     pop();
   };
 }

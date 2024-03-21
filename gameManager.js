@@ -1,6 +1,11 @@
-let currentScene = 0;
+let currentScene = 3;
+// 0: Start Scene
+// 1: Game Scene
+// 2: Game Over Scene
+// 3: Highscore Scene
 let currentLevel = 1;
 let currentScore = 0;
+let previousScore = 0;
 
 // Ship
 let bullets = [];
@@ -28,10 +33,6 @@ let addLifePointThreshold = 10000;
 let livesAdded = 0;
 let cachedLivesAdded = livesAdded;
 
-// Scenes: 0 Start Screen
-// 1: Game Screen
-// 2: Gameover Screen
-
 function setup() {
   createCanvas(1000, 800);
   hud = new HUD();
@@ -47,8 +48,6 @@ function setup() {
   if (currentScene == 0) {
   } else if (currentScene == 1) {
     startGameScene();
-  } else if (currentScene == 2) {
-    startGameOverScene();
   }
 }
 
@@ -59,6 +58,8 @@ function draw() {
     drawGameScene();
   } else if (currentScene == 2) {
     drawGameOverScene();
+  } else if (currentScene == 3) {
+    drawHighscoreScene();
   }
 }
 
@@ -115,6 +116,8 @@ function drawGameScene() {
   if (ship.currentLives <= 0) {
     // Go to game over screen
     currentScene++;
+    // Cache gameover score for saved scores
+    previousScore = currentScore;
     // Reset Score
     currentScore = 0;
     // Reset number of asteroids
@@ -290,7 +293,14 @@ function drawGameOverScene() {
   // Stop game sounds
   stopAllSounds();
 
-  hud.displayGameOverScreen();
+  hud.displayGameOverScreen(previousScore);
+}
+
+function drawHighscoreScene() {
+  // Background
+  background("black");
+
+  hud.displayHighscoreScene();
 }
 
 function userInputUpdate() {
