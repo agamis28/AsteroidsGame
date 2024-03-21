@@ -142,7 +142,7 @@ function HUD() {
     pop();
   };
 
-  this.displayHighscoreScene = function () {
+  this.displayHighscoreScene = function (currentHighscores) {
     push();
     // Setting text to center
     textAlign(CENTER, CENTER);
@@ -159,31 +159,51 @@ function HUD() {
     textSize(60);
     stroke("#175478");
     fill("#175478");
-    text("1. Name: 2902974", width / 2, height / 2 - 140);
+    text(
+      "1. " + currentHighscores[0].name + ": " + currentHighscores[0].score,
+      width / 2,
+      height / 2 - 140
+    );
 
     // Number 2
     textSize(60);
     stroke("#175478");
     fill("#175478");
-    text("2. JAHAH: 249298", width / 2, height / 2 - 70);
+    text(
+      "2. " + currentHighscores[1].name + ": " + currentHighscores[1].score,
+      width / 2,
+      height / 2 - 70
+    );
 
     // Number 3
     textSize(60);
     stroke("#175478");
     fill("#175478");
-    text("3. dsdsa: 10274", width / 2, height / 2 - 0);
+    text(
+      "3. " + currentHighscores[3].name + ": " + currentHighscores[3].score,
+      width / 2,
+      height / 2 - 0
+    );
 
     // Number 4
     textSize(60);
     stroke("#175478");
     fill("#175478");
-    text("4. Kdsde: 8524", width / 2, height / 2 + 70);
+    text(
+      "4. " + currentHighscores[4].name + ": " + currentHighscores[4].score,
+      width / 2,
+      height / 2 + 70
+    );
 
     // Number 5
     textSize(60);
     stroke("#175478");
     fill("#175478");
-    text("5. Angel: 1222", width / 2, height / 2 + 140);
+    text(
+      "5. " + currentHighscores[5].name + ": " + currentHighscores[5].score,
+      width / 2,
+      height / 2 + 140
+    );
 
     // CLICK AREA
     // fill("white");

@@ -60,6 +60,13 @@ function setup() {
     const savedScores = localStorage.getItem("highscores");
     if (savedScores) {
       currentHighscores = JSON.parse(savedScores);
+    } else {
+      // When running on new machine add 5 emptys to stop undefined references
+      for (i = 0; i <= 5; i++) {
+        currentHighscores.push(new ScoreObject("", 0));
+      }
+      // Set the current highscores to highscores in local storage
+      localStorage.setItem("highscores", JSON.stringify(currentHighscores));
     }
   } else {
     console.log("LOCAL STORAGE IS NOT SUPPORTED, HIGHSCORES WILL NOT WORK");
@@ -318,13 +325,7 @@ function drawHighscoreScene() {
   // Background
   background("black");
 
-  // Debugging
-  if (localStorage) {
-    const savedScores = localStorage.getItem("highscores");
-    console.log(savedScores);
-  }
-
-  hud.displayHighscoreScene();
+  hud.displayHighscoreScene(currentHighscores);
 }
 
 function userInputUpdate() {
