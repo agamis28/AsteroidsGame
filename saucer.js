@@ -7,6 +7,7 @@ class Saucer {
     this.velocity = createVector(0, 0);
     this.speed = 2;
     this.size;
+    this.scoreValue = 200;
     this.player;
     this.accuracyOffset = HALF_PI + QUARTER_PI;
     this.bulletAngle;
@@ -22,6 +23,7 @@ class Saucer {
       this.size = 30;
       // Bad Accuracy, Larger Offset (Set in Constructor)
     } else {
+      this.scoreValue = 1000;
       // Good accuracy based on score
       let scoreIncrementAmount = floor(
         this.score / this.accuracyPointIncrement
@@ -37,10 +39,10 @@ class Saucer {
 
     // Binding con
     this.shoot = this.shoot.bind(this);
-    this.pickRandomDirection = this.pickRandomMoveDirection.bind(this);
+    this.pickRandomMoveDirection = this.pickRandomMoveDirection.bind(this);
 
     this.shooting = setInterval(this.shoot, 2000);
-    this.changingDirection = setInterval(this.pickRandomMoveDirection, 2000);
+    this.changingDirection = setInterval(this.pickRandomMoveDirection, 1500);
   }
 
   display() {
@@ -76,7 +78,6 @@ class Saucer {
         this.velocity.y = 0.5;
         break;
     }
-
     // Matching direction of velocity to speed
     this.velocity.mult(this.speed);
     // Moving position from velocity
@@ -92,19 +93,24 @@ class Saucer {
   }
 
   shoot() {
-    console.log("accuracy : " + this.accuracyOffset);
+    if (this.player) {
+      console.log("accuracy : " + this.accuracyOffset);
 
-    let directionOfPlayer = p5.Vector.sub(this.player.position, this.position);
+      let directionOfPlayer = p5.Vector.sub(
+        this.player.position,
+        this.position
+      );
 
-    let playerAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
+      let playerAngle = Math.atan2(directionOfPlayer.y, directionOfPlayer.x);
 
-    constrain(this.accuracyOffset, 0, TWO_PI);
+      constrain(this.accuracyOffset, 0, TWO_PI);
 
-    this.bulletAngle = random(
-      playerAngle - this.accuracyOffset,
-      playerAngle + this.accuracyOffset
-    );
+      this.bulletAngle = random(
+        playerAngle - this.accuracyOffset,
+        playerAngle + this.accuracyOffset
+      );
 
-    this.bullets.push(new Bullet(this.position, this.bulletAngle, "#FE1517"));
+      this.bullets.push(new Bullet(this.position, this.bulletAngle, "#FE1517"));
+    }
   }
 }

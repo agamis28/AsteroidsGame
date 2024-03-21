@@ -6,15 +6,15 @@ let currentScore = 0;
 let bullets = [];
 
 // Asteroids
-let startNumberOfAsteroids = 4;
+let startNumberOfAsteroids = 4; // 4
 let currentNumberOfAsteroids = startNumberOfAsteroids;
 let asteroids = [];
 
 // Saucers
-let startNumberOfSaucers = 0;
+let startNumberOfSaucers = 0; // 0
 let saucers = [];
 // Add saucer after point threshold
-let spawnSaucerThreshold = 200; // 1500 playtest: 200
+let spawnSaucerThreshold = 1500; // 1500 playtest: 200
 let saucersSpawned = 0;
 let cachedSaucersSpawned = saucersSpawned;
 
@@ -124,8 +124,13 @@ function drawGameScene() {
       saucers[i].bullets = [];
     }
     saucers = [];
+    saucersSpawned = 0;
+    cachedSaucersSpawned = 0;
     // Reset bullets
     bullets = [];
+    // Reseting lives
+    livesAdded = 0;
+    cachedLivesAdded = 0;
   }
 
   // Asteroids
@@ -161,6 +166,19 @@ function drawGameScene() {
           break;
         }
       }
+
+      // Check collisions with saucers bullets
+      for (k = 0; k < saucers[j].bullets.length; k++) {
+        if (
+          collisionManager.checkCollisions(asteroids[i], saucers[j].bullets[k])
+        ) {
+          breakAsteroid();
+          saucers[j].bullets.splice(k, 1);
+          crashSound.play();
+          startScreenShake();
+          break;
+        }
+      }
     }
 
     // Check collisions with Bullets
@@ -185,13 +203,51 @@ function drawGameScene() {
   // Saucers
   for (i = 0; i <= saucers.length - 1; i++) {
     saucers[i].getPlayer(ship);
-    saucers[i].display();
     saucers[i].update();
+    saucers[i].display();
     collisionManager.wrapEdges(saucers[i]);
+    // Check collisions with ship
+    if (collisionManager.checkCollisions(ship, saucers[i])) {
+      // Ship on collisions
+      ship.changePosition(width / 2, height / 2);
+      ship.currentLives--;
 
-    for (j = 0; j < saucers[i].bullets.length; j++) {
-      saucers[i].bullets[j].update();
-      saucers[i].bullets[j].display();
+      saucers.splice(i, 1);
+      crashSound.play();
+      startScreenShake();
+    }
+
+    // Check collisions with Bullets
+    for (j = 0; j < bullets.length; j++) {
+      if (saucers[i] != undefined && bullets[j] != undefined) {
+        if (collisionManager.checkCollisions(saucers[i], bullets[j])) {
+          crashSound.play();
+          startScreenShake();
+          currentScore += saucers[i].scoreValue;
+          bullets.splice(j, 1);
+          saucers.splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    // Saucer Bullets
+    if (saucers[i] && saucers[i].bullets) {
+      for (j = 0; j < saucers[i].bullets.length; j++) {
+        saucers[i].bullets[j].update();
+        saucers[i].bullets[j].display();
+
+        // Check collisions with ship
+        if (collisionManager.checkCollisions(ship, saucers[i].bullets[j])) {
+          // Ship on collisions
+          ship.changePosition(width / 2, height / 2);
+          ship.currentLives--;
+
+          saucers[i].bullets.splice(j, 1);
+          crashSound.play();
+          startScreenShake();
+        }
+      }
     }
   }
 
