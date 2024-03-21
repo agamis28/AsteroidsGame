@@ -1,4 +1,4 @@
-let currentScene = 2;
+let currentScene = 0;
 // 0: Start Scene
 // 1: Game Scene
 // 2: Game Over Scene
@@ -55,12 +55,13 @@ function setup() {
     startGameScene();
   }
 
-  if (localStorage) {
-    const savedScores = localStorage.getItem("highscores");
-    console.log(savedScores);
-  } else {
-    console.log("LOCAL STORAGE IS NOT SUPPORTED, HIGHSCORES WILL NOT WORK");
-  }
+  // Checking if local stoarge is working (null: is working)
+  // if (localStorage) {
+  //   const savedScores = localStorage.getItem("highscores");
+  //   console.log(savedScores);
+  // } else {
+  //   console.log("LOCAL STORAGE IS NOT SUPPORTED, HIGHSCORES WILL NOT WORK");
+  // }
 }
 
 function draw() {
@@ -315,6 +316,17 @@ function drawHighscoreScene() {
   // Background
   background("black");
 
+  if (localStorage) {
+    localStorage.setItem("highscores", JSON.stringify(currentHighscores));
+  }
+
+  if (localStorage) {
+    const savedScores = localStorage.getItem("highscores");
+    console.log(savedScores);
+  } else {
+    console.log("LOCAL STORAGE IS NOT SUPPORTED, HIGHSCORES WILL NOT WORK");
+  }
+
   hud.displayHighscoreScene();
 }
 
@@ -392,6 +404,7 @@ function keyPressed() {
     }
     if (keyCode == ENTER) {
       canEnterName = false;
+      currentHighscores.push(new ScoreObject(currentName, previousScore));
     }
   }
 }
@@ -497,4 +510,10 @@ function stopAllSounds() {
   shootSound.stop();
   engineSound.stop();
   crashSound.stop();
+}
+
+// Score Object to store into local storage
+function ScoreObject(name, score) {
+  this.name = name;
+  this.score = score;
 }
