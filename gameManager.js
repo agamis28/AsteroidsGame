@@ -1,11 +1,16 @@
-let currentScene = 3;
+let currentScene = 2;
 // 0: Start Scene
 // 1: Game Scene
 // 2: Game Over Scene
 // 3: Highscore Scene
 let currentLevel = 1;
 let currentScore = 0;
+
+// Highscores
 let previousScore = 0;
+let currentName = "";
+let currentHighscores = [];
+let canEnterName = true;
 
 // Ship
 let bullets = [];
@@ -48,6 +53,13 @@ function setup() {
   if (currentScene == 0) {
   } else if (currentScene == 1) {
     startGameScene();
+  }
+
+  if (localStorage) {
+    const savedScores = localStorage.getItem("highscores");
+    console.log(savedScores);
+  } else {
+    console.log("LOCAL STORAGE IS NOT SUPPORTED, HIGHSCORES WILL NOT WORK");
   }
 }
 
@@ -134,6 +146,9 @@ function drawGameScene() {
     // Reseting lives
     livesAdded = 0;
     cachedLivesAdded = 0;
+    // Reset Name
+    currentName = "";
+    canEnterName = true;
   }
 
   // Asteroids
@@ -293,7 +308,7 @@ function drawGameOverScene() {
   // Stop game sounds
   stopAllSounds();
 
-  hud.displayGameOverScreen(previousScore);
+  hud.displayGameOverScreen(previousScore, currentName, canEnterName);
 }
 
 function drawHighscoreScene() {
@@ -360,6 +375,23 @@ function keyPressed() {
     // Shooting spawning bullet
     if (keyCode == 32) {
       shoot();
+    }
+  }
+  if (currentScene == 2 && canEnterName) {
+    if (
+      ((key >= "a" && key <= "z") || (key >= "A" && key <= "Z")) &&
+      !keyIsDown(TAB) &&
+      !keyIsDown(BACKSPACE) &&
+      !keyIsDown(DELETE) &&
+      !keyIsDown(ESCAPE) &&
+      !keyIsDown(ALT)
+    ) {
+      if (keyCode != 20 && keyCode != SHIFT && keyCode != ENTER) {
+        currentName += key;
+      }
+    }
+    if (keyCode == ENTER) {
+      canEnterName = false;
     }
   }
 }

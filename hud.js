@@ -79,7 +79,7 @@ function HUD() {
     this.positionX = this.startPositionX;
   };
 
-  this.displayGameOverScreen = function (score) {
+  this.displayGameOverScreen = function (score, name, canEnterName) {
     push();
     // Setting text to center
     textAlign(CENTER, CENTER);
@@ -103,6 +103,20 @@ function HUD() {
     stroke("white");
     fill("white");
     text(str(score), width / 2, height / 2);
+
+    // Enter Name
+    if (canEnterName) {
+      textSize(30);
+      stroke("black");
+      fill("white");
+      text("Type Name, Then Press Enter:", width / 2, height / 2 + 50);
+    }
+
+    // Name
+    textSize(40);
+    stroke("#175478");
+    fill("#175478");
+    text(str(name), width / 2, height / 2 + 80);
 
     // CLICK AREA
     // fill("white");
